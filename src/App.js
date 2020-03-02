@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -80,11 +80,13 @@ const useStyles = makeStyles(theme => ({
 
 export default function App() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [open, setOpen] = React.useState(true);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const [open, setOpen] = useState(true);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const isDrawerOpened = Boolean(open);
+  console.log('dashboard open = ', open);
 
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
@@ -95,7 +97,11 @@ export default function App() {
   };
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    if(open===true){
+      setOpen(false);
+    }else {
+      setOpen(true)
+    }
   };
 
   const handleMenuClose = () => {
@@ -234,7 +240,7 @@ export default function App() {
       {renderMobileMenu}
       {renderMenu}
 
-      <Dashboard />
+      <Dashboard isMenuOpened = {isDrawerOpened}/>
     </div>
   );
 }
